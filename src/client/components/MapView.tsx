@@ -377,8 +377,8 @@ const MapView: React.FC<MapViewProps> = ({
   const createPhotoMarker = (user: User, borderColor: string, type: string): string => {
     const photo = user.photo || '';
     const initials = `${user.givenName?.[0] || ''}${user.surname?.[0] || ''}`;
-    const size = type === 'current' ? 48 : 40;
-    const borderWidth = type === 'current' ? 4 : 3;
+    const size = type === 'current' ? 72 : 60;
+    const borderWidth = type === 'current' ? 5 : 4;
 
     if (photo && photo.startsWith('data:image')) {
       return `
@@ -403,14 +403,14 @@ const MapView: React.FC<MapViewProps> = ({
         </div>
         <div style="
           position: absolute;
-          bottom: -6px;
+          bottom: -9px;
           left: 50%;
           transform: translateX(-50%);
           width: 0;
           height: 0;
-          border-left: 8px solid transparent;
-          border-right: 8px solid transparent;
-          border-top: 10px solid ${borderColor};
+          border-left: 12px solid transparent;
+          border-right: 12px solid transparent;
+          border-top: 15px solid ${borderColor};
         "></div>
       `;
     }
@@ -436,14 +436,14 @@ const MapView: React.FC<MapViewProps> = ({
       </div>
       <div style="
         position: absolute;
-        bottom: -6px;
+        bottom: -9px;
         left: 50%;
         transform: translateX(-50%);
         width: 0;
         height: 0;
-        border-left: 8px solid transparent;
-        border-right: 8px solid transparent;
-        border-top: 10px solid ${borderColor};
+        border-left: 12px solid transparent;
+        border-right: 12px solid transparent;
+        border-top: 15px solid ${borderColor};
       "></div>
     `;
   };
