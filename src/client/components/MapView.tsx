@@ -36,6 +36,7 @@ const MapView: React.FC<MapViewProps> = ({
   const lastUserCountRef = useRef<number>(0); // Track user count for auto-zoom
   const isUserSelectionRef = useRef<boolean>(false); // Track if zoom was from user selection
   const popupUserIdRef = useRef<string | null>(null); // Track which user's popup is open
+  const markerClickedRef = useRef<boolean>(false); // Track if a marker was just clicked
 
   useEffect(() => {
     if (!mapRef.current || map) return;
@@ -62,9 +63,21 @@ const MapView: React.FC<MapViewProps> = ({
 
       // Create popup
       const newPopup = new atlas.Popup({
-        closeButton: true,
+        closeButton: false,
         pixelOffset: [0, -40]
       });
+
+      // Close popup when clicking on the map (but not on markers)
+      newMap.events.add('click', () => {
+        // If a marker was just clicked, don't close the popup
+        if (markerClickedRef.current) {
+          markerClickedRef.current = false;
+          return;
+        }
+        newPopup.close();
+        popupUserIdRef.current = null;
+      });
+
       setPopup(newPopup);
       setMap(newMap);
     });
@@ -175,6 +188,7 @@ const MapView: React.FC<MapViewProps> = ({
 
       // Add click event
       map.events.add('click', marker, () => {
+        markerClickedRef.current = true; // Flag that marker was clicked
         const popupContent = createPopupContent(user, markerType);
         popup.setOptions({
           position: coords,
