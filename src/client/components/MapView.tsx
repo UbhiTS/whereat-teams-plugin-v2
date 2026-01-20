@@ -437,9 +437,10 @@ const MapView: React.FC<MapViewProps> = ({
                       type === 'direct-report' ? '(Direct Report)' : 
                       type === 'current' ? '(You)' : '';
     
-    const photo = user.photo && user.photo.startsWith('data:image') 
-      ? `<img src="${user.photo}" alt="${user.displayName}" class="popup-photo" />`
-      : `<div class="popup-initials">${user.givenName?.[0] || ''}${user.surname?.[0] || ''}</div>`;
+    const hasPhoto = user.photo && user.photo.startsWith('data:image');
+    const photoBanner = hasPhoto
+      ? `<div class="popup-photo-banner"><img src="${user.photo}" alt="${user.displayName}" class="popup-photo-full" /></div>`
+      : `<div class="popup-initials-banner"><div class="popup-initials-large">${user.givenName?.[0] || ''}${user.surname?.[0] || ''}</div></div>`;
 
     // Build location string with city, state, country, postal code
     const locationParts = [
@@ -452,17 +453,15 @@ const MapView: React.FC<MapViewProps> = ({
 
     return `
       <div class="map-popup">
-        <div class="popup-header">
-          ${photo}
-          <div class="popup-info">
-            <div class="popup-name">${user.displayName} ${roleLabel}</div>
-            <div class="popup-title">${user.jobTitle || 'No title'}</div>
+        ${photoBanner}
+        <div class="popup-content">
+          <div class="popup-name">${user.displayName} ${roleLabel}</div>
+          <div class="popup-title">${user.jobTitle || 'No title'}</div>
+          <div class="popup-details">
+            <div class="popup-location">📍 ${locationString}${postalCode}</div>
+            ${user.mail ? `<div class="popup-email">✉️ ${user.mail}</div>` : ''}
+            ${user.businessPhones?.[0] ? `<div class="popup-phone">📞 ${user.businessPhones[0]}</div>` : ''}
           </div>
-        </div>
-        <div class="popup-details">
-          <div class="popup-location">📍 ${locationString}${postalCode}</div>
-          ${user.mail ? `<div class="popup-email">✉️ ${user.mail}</div>` : ''}
-          ${user.businessPhones?.[0] ? `<div class="popup-phone">📞 ${user.businessPhones[0]}</div>` : ''}
         </div>
       </div>
     `;
