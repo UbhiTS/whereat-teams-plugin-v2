@@ -1,0 +1,7 @@
+# Install with: pip install --pre -r requirements.txt
+python-dotenv
+azure-ai-projects>=2.0.0b3
+azure-ai-agents
+azure-identity
+openai
+
