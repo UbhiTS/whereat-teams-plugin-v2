@@ -190,8 +190,10 @@ const MapView: React.FC<MapViewProps> = ({
       map.events.add('click', marker, () => {
         markerClickedRef.current = true; // Flag that marker was clicked
         const popupContent = createPopupContent(user, markerType);
+        // Get the marker's current position (which may have been jittered)
+        const markerPosition = marker.getOptions().position;
         popup.setOptions({
-          position: coords,
+          position: markerPosition,
           content: popupContent
         });
         popup.open(map);
