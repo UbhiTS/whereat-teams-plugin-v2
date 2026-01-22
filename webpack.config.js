@@ -39,7 +39,8 @@ module.exports = {
       filename: 'index.html'
     }),
     new webpack.DefinePlugin({
-      'process.env.AZURE_MAPS_KEY': JSON.stringify(process.env.AZURE_MAPS_API_KEY || '')
+      'process.env.AZURE_MAPS_KEY': JSON.stringify(process.env.AZURE_MAPS_API_KEY || ''),
+      'process.env.DEMO_USER_EMAIL': JSON.stringify(process.env.DEMO_USER_EMAIL || '')
     })
   ],
   devServer: {

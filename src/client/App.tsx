@@ -51,8 +51,8 @@ const App: React.FC = () => {
     } catch (error) {
       console.log('Not running in Teams context, using demo mode');
       setIsTeamsContext(false);
-      // Try to load a default user - you can change this to your email
-      const defaultUser = 'tubhi@microsoft.com';
+      // Load demo user from environment config
+      const defaultUser = process.env.DEMO_USER_EMAIL || '';
       const user = await apiService.getUserByPrincipalName(defaultUser);
       if (user) {
         await loadUserData(defaultUser);
